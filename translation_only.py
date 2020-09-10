@@ -8,7 +8,6 @@ Created on Wed Sep  9 14:58:00 2020
 import numpy as np
 import math
 import cmath
-from plotting_heatmap import heatmap
 
 
 def GaborWavelet(omega, t, Gabor_coef):
@@ -42,19 +41,4 @@ def DWT_signal(ut, a, b, t0, AA, BB, TT, omega0, Gabor_coef):
 
 
 
-
-
-
-a = np.arange(1,30)
-b= np.arange(0,50)
-
-t = np.arange(0,101)
-ut = np.sin(2*math.pi/50 * t)
-
-
-Wab = DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
-
-#%timeit DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
-
-heatmap(Wab, a, b,)
 
