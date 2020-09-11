@@ -64,6 +64,54 @@ def DWT_signal(ut, a, b, t0, AA, BB, TT, omega0, Gabor_coef):
 
 ### Benchmarks
 
+Сделаем проверку скорости на среднем объёме данных:
+
+```python
+a = np.arange(1,30,0.5) # 58 
+b = np.arange(0,50,0.5) # 100
+
+t = np.arange(0,101) # 101
+ut = np.sin(2*math.pi/50 * t) + 100*np.cos(0.4*t)/(t*t+1)
+
+omega = 1
+
+Gabor_coef = 8
+
+```
+
+Проверка делается с помощью инструкций `%timeit` IPython:
+
+```python
+%timeit translation_only.DWT_signal(ut, a, b, t, a.size, b.size, t.size, omega, Gabor_coef)
+%timeit light_vectorization.DWT_signal(ut, a, b, t, a.size, b.size, t.size, omega, Gabor_coef)
+%timeit strong_vectorization.DWT_signal(ut, a, b, t, a.size, b.size, t.size, omega, Gabor_coef)
+%timeit numba_strong.DWT_signal(ut, a, b, t, a.size, b.size, t.size, omega, Gabor_coef)
+%timeit numba_just.DWT_signal(ut, a, b, t, a.size, b.size, t.size, omega, Gabor_coef)
+%timeit numba_vectorization.DWT_signal(ut, a, b, t, a.size, b.size, t.size, omega, Gabor_coef)
+%timeit numba_vec_parallel.DWT_signal(ut, a, b, t, a.size, b.size, t.size, omega, Gabor_coef)
+```
+
+Каждый модуль здесь - это отдельная версия алгоритма.
+
+Итак, для этой размерности данных получаем результаты:
+
+| Version   |      Time      | 
+|:----------:|:-------------:|
+| translation_only |  7.24 s ± 142 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)|
+| light_vectorization |    372 ms ± 8.83 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)   |
+| strong_vectorization | 368 ms ± 8.54 ms per loop (mean ± std. dev. of 7 runs, 1 loop each) |
+| numba_strong |  219 ms ± 5.17 ms per loop (mean ± std. dev. of 7 runs, 1 loop each) |
+| numba_just |    36.3 ms ± 914 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)   |
+| numba_vectorization | 35.1 ms ± 350 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)|
+| numba_vec_parallel |  864 ms ± 9.95 ms per loop (mean ± std. dev. of 7 runs, 1 loop each) |
+
+
+Как видно, удалось добиться ускорения примерно в 7.24s/35ms = 200 раз, не делая никакого распараллеливания. Параллельная версия на таком объеме данных работает хуже остальных улучшенных, попробуем увечилить объём:
+
+
+
+
+
 
 
 ## Обратное преобразование
