@@ -103,14 +103,10 @@ Gabor_coef = 8
 | numba_strong |  219 ms ± 5.17 ms per loop (mean ± std. dev. of 7 runs, 1 loop each) |
 | numba_just |    36.3 ms ± 914 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)   |
 | numba_vectorization | 35.1 ms ± 350 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)|
-| numba_vec_parallel |  864 ms ± 9.95 ms per loop (mean ± std. dev. of 7 runs, 1 loop each) |
+| numba_vec_parallel |  8.33 ms ± 85.2 µs per loop (mean ± std. dev. of 7 runs, 100 loops each) |
 
 
-Как видно, удалось добиться ускорения примерно в 7.24s/35ms = 200 раз, не делая никакого распараллеливания. Параллельная версия на таком объеме данных работает хуже остальных улучшенных, попробуем увечилить объём:
-
-
-
-
+Как видно, удалось добиться ускорения примерно в 7.24s/35ms = 200 раз, не делая никакого распараллеливания. Параллельная версия работает ещё в 4 раза быстрее на моём 8-ядерном компьютере. 
 
 
 
