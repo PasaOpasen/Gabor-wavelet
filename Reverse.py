@@ -32,6 +32,32 @@ def St(t, Wab, a, b, omega, Gabor_coef):
 
 
 
+def St_array(times, Wab, a, b, omega, Gabor_coef):
+    
+    res = []
+    
+    coef = (a[1]-a[0])*(b[1]-b[0])
+    
+    adeg = a**2.5
+    
+    psi = np.empty((b.size, a.size), dtype = np.complex128)
+    
+    for t in times:
+        
+        for i in range(b.size):
+            
+            for j in range(a.size):
+                psi[i,j] = GaborWavelet(omega, (t-b[i])/a[j], Gabor_coef)
+    
+        answer = Wab * psi
+        
+        res.append(np.divide(answer, adeg).sum() * coef)
+    
+    return np.array(res)
+
+
+
+
 a = np.arange(0.1,30,0.5)
 b= np.arange(-20,105,0.5)
 
@@ -62,8 +88,9 @@ for name, ut in voc.items():
     heatmap(Wab.real, a, b, name = f'W(a,b) from {name}')
     
     
-    s = np.array([St(time, Wab, a, b, omega, g) for time in t])
+    #s = np.array([St(time, Wab, a, b, omega, g) for time in t])
     
+    s = St_array(t, Wab, a, b, omega, g)
     
     plt.plot(t, normalize(ut), label = 'real', color = 'blue', linewidth = 4)
     plt.plot(t, normalize(s), label = 'predict', color = 'red', linestyle = '--', linewidth = 3)
