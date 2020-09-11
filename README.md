@@ -93,6 +93,8 @@ Gabor_coef = 8
 
 Каждый модуль здесь - это отдельная версия алгоритма.
 
+![1](https://github.com/PasaOpasen/Gabor-wavelet/blob/master/images/W(a%2Cb).png)
+
 Итак, для этой размерности данных получаем результаты:
 
 | Version   |      Time      | 
@@ -112,5 +114,23 @@ Gabor_coef = 8
 
 ## Обратное преобразование
 
+Для обратного преобразования нужно иметь исходную матрицу `W(a,b)`, вдобавок желательно посмотреть её тепловую карту, чтобы убедиться, что заданная сетка `a x b` покрывает все возвышения (иногда эту сетку придётся сдвигать либо делать больше). Получить значения сигнала (обратного преобразования) для массиво времен `t` можно командой
 
+```
+from Reverse import St_array
 
+s = St_array(t, Wab, a, b, omega, Gabor_coef)
+
+```
+
+![1](https://github.com/PasaOpasen/Gabor-wavelet/blob/master/images/W(a%2Cb)%20from%20sin(2pi%20div%2050%20t).png)
+
+![1](https://github.com/PasaOpasen/Gabor-wavelet/blob/master/images/sin(2pi%20div%2050%20t).png)
+
+![1](https://github.com/PasaOpasen/Gabor-wavelet/blob/master/images/W(a%2Cb)%20from%20sin(2pi%20div%2050%20t)%2Bsin(2pi%20div%20100%20t).png)
+
+![1](https://github.com/PasaOpasen/Gabor-wavelet/blob/master/images/sin(2pi%20div%2050%20t)%2Bsin(2pi%20div%20100%20t).png)
+
+![1](https://github.com/PasaOpasen/Gabor-wavelet/blob/master/images/W(a%2Cb)%20from%20sin(2pi%20div%2050%20t)%20%2B%204sin(2pi%20div%2010%20t).png)
+
+![1](https://github.com/PasaOpasen/Gabor-wavelet/blob/master/images/sin(2pi%20div%2050%20t)%20%2B%204sin(2pi%20div%2010%20t).png)
