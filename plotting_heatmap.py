@@ -49,7 +49,7 @@ def heatmap(data, anet, bnet,  cmap = 'twilight', dpi = 350, name = 'W(a,b)'):
     
     figure.colorbar(c)
                
-    figure.savefig(f'{name}.png', dpi = dpi)
+    figure.savefig(f'images/{name.replace("/", " div ")}.png', dpi = dpi)
 
     plt.show()    
     

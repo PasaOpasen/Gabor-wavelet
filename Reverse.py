@@ -45,12 +45,21 @@ ut_3 = np.sin(2*math.pi/50 * t) + 4*np.sin(2*math.pi/10 * t)
 omega = 1
 g = 8
 
-for ut in (ut_3,):
+
+voc = {
+       'sin(2pi/50 t)':ut_1,
+       'sin(2pi/50 t)+sin(2pi/100 t)':ut_2,
+       'sin(2pi/50 t) + 4sin(2pi/10 t)':ut_3
+       }
+
+
+
+for name, ut in voc.items():
 
     Wab = DWT_signal(ut, a, b, t, a.size, b.size, t.size, omega, g)
     
     
-    heatmap(Wab.real, a, b)
+    heatmap(Wab.real, a, b, name = f'W(a,b) from {name}')
     
     
     s = np.array([St(time, Wab, a, b, omega, g) for time in t])
@@ -61,7 +70,9 @@ for ut in (ut_3,):
     
     plt.xlabel('time')
     plt.legend()
-    plt.title('forward and backward transforms')
+    plt.title(f'forward and backward transforms\n{name}')
+    
+    plt.savefig(f'images/{name.replace("/", " div ")}.png', dpi = 350)
     
     plt.show()
 
