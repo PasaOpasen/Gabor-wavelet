@@ -12,29 +12,54 @@ from plotting_heatmap import heatmap
 
 
 import translation_only
-
+import light_vectorization
+import strong_vectorization
+import numba_just
+import numba_strong
+import numba_vectorization
+import numba_vec_parallel
 
 
 
 # start data
 
-a = np.arange(1,30)
-b= np.arange(0,50)
+a = np.arange(1,30,0.5)
+b= np.arange(0,50,0.5)
 
 
 t = np.arange(0,101)
-ut = np.sin(2*math.pi/50 * t)
+ut = np.sin(2*math.pi/50 * t)#+np.sin(2*math.pi/100 * t)
 
 
 
 # testing methods
 
 
-Wab = translation_only.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+#Wab = translation_only.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+
+#Wab = light_vectorization.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+
+#Wab = strong_vectorization.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+
+#Wab = numba_just.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+
+#Wab = numba_strong.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+
+Wab = numba_vectorization.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+
+#Wab = numba_vec_parallel.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+
 
 #%timeit translation_only.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+#%timeit light_vectorization.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+#%timeit strong_vectorization.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+#%timeit numba_strong.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+#%timeit numba_just.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+#%timeit numba_vectorization.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
+#%timeit numba_vec_parallel.DWT_signal(ut, a, b, t, a.size, b.size, t.size, 1, 8)
 
-heatmap(Wab, a, b,)
+
+heatmap(Wab.real, a, b,)
 
 
 
